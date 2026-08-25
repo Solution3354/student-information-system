@@ -42,21 +42,29 @@ print(border)
 print()
 
 # --- Collect the information from the user ---
-full_name = input("Full Name                      : ")
-student_id = input("Student ID                     : ")
-programme = input("Programme                      : ")
-level = input("Level                          : ")
-age = input("Age                            : ")
-favourite_language = input("Favourite Programming Language : ")
+# .strip() removes any spaces the user typed by mistake at the start or
+# the end of their answer, so those spaces never end up in the username.
+full_name = input("Full Name                      : ").strip()
+student_id = input("Student ID                     : ").strip()
+programme = input("Programme                      : ").strip()
+level = input("Level                          : ").strip()
+age = input("Age                            : ").strip()
+favourite_language = input("Favourite Programming Language : ").strip()
 
 # --- Generate new information using string concatenation ---
-# The username is the first few letters of the name joined onto the
-# student ID, for example "tay" + "22447815" gives "tay22447815".
-name_prefix = full_name[0:NAME_LETTERS_USED].lower()
+# The username starts from the FIRST name only. Taking the first three
+# letters of the whole name would put a space in the username for a
+# student like "Jo Mensah", which is not valid in an email address.
+first_name = full_name.split(" ")[0]
+name_prefix = first_name[0:NAME_LETTERS_USED].lower()
 generated_username = name_prefix + student_id
 
 # The email is that same username joined onto the fixed domain.
 generated_email = generated_username + EMAIL_DOMAIN
+
+# One readable sentence built by joining several answers together.
+contact_line = ("Reach " + full_name + " (" + programme + ", Level " +
+                level + ") at " + generated_email)
 
 # --- Display everything in a formatted profile ---
 print()
@@ -73,6 +81,8 @@ print(build_row("Favourite Language", favourite_language))
 print(divider)
 print(build_row("Generated Username", generated_username))
 print(build_row("Generated Email", generated_email))
+print()
+print(contact_line)
 print()
 print(border)
 print(centre("UNIVERSITY OF GHANA"))
